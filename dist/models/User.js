@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UserMutation = exports.ChangePasswordInput = exports.UpdateUserInputType = exports.CreateUserInputType = exports.LoginUserInputType = exports.AccessToken = exports.User = void 0;
+exports.UserMutation = exports.UserQuery = exports.ChangePasswordInput = exports.UpdateUserInputType = exports.CreateUserInputType = exports.LoginUserInputType = exports.AccessToken = exports.User = void 0;
 const nexus_1 = require("nexus");
 const controllers_1 = require("../controllers");
 exports.User = (0, nexus_1.objectType)({
@@ -47,6 +47,22 @@ exports.ChangePasswordInput = (0, nexus_1.inputObjectType)({
     definition(t) {
         t.nonNull.string("currentPassword");
         t.nonNull.string("newPassword");
+    },
+});
+exports.UserQuery = (0, nexus_1.extendType)({
+    type: "Query",
+    definition(t) {
+        t.nullable.field("me", {
+            type: "User",
+            resolve: async (_root, _args, ctx) => {
+                try {
+                    return await (0, controllers_1.currentLoggedInUser)(ctx);
+                }
+                catch (error) {
+                    throw error;
+                }
+            },
+        });
     },
 });
 exports.UserMutation = (0, nexus_1.extendType)({

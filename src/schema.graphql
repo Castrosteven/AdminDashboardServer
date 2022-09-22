@@ -19,6 +19,7 @@ type Employee {
 
 type Mutation {
   changePassword(data: changePasswordInput!): Boolean!
+  createEmployee(data: createEmployeeInput!): Employee!
   createUser(data: createUserInputType!): User!
   signInUser(data: loginUserInputType!): accessToken!
   updateCompany(data: updateCompanyInputType!): Company!
@@ -32,8 +33,13 @@ type Project {
 }
 
 type Query {
+  employees: [Employee]!
   me: User
   myCompany: Company!
+}
+
+type Subscription {
+  employees: [Employee]!
 }
 
 type Task {
@@ -62,6 +68,12 @@ type accessToken {
 input changePasswordInput {
   currentPassword: String!
   newPassword: String!
+}
+
+input createEmployeeInput {
+  email: String!
+  firstName: String!
+  lastName: String!
 }
 
 input createUserInputType {

@@ -23,6 +23,34 @@ const createUser = async (ctx, data) => {
         return await ctx.db.user.create({
             data: {
                 ...data,
+                Company: {
+                    create: {
+                        name: "My Company",
+                        employees: {
+                            create: {
+                                email: "Johndoe@email.com",
+                                firstName: "John",
+                                lastName: "Doe",
+                            },
+                        },
+                        projects: {
+                            create: {
+                                name: "My First Project",
+                                tasks: {
+                                    create: {
+                                        name: "My First Task",
+                                        description: "Hello World Task",
+                                    },
+                                },
+                            },
+                        },
+                        teams: {
+                            create: {
+                                name: "The A Team",
+                            },
+                        },
+                    },
+                },
                 password: encryptedPassword,
             },
         });
@@ -94,6 +122,7 @@ const currentLoggedInUser = async (ctx) => {
         }
         throw new Error("Invalid Token Provided");
     }
+    throw new Error("No Token Provided");
 };
 exports.currentLoggedInUser = currentLoggedInUser;
 /**

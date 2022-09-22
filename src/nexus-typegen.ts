@@ -18,6 +18,11 @@ export interface NexusGenInputs {
     currentPassword: string; // String!
     newPassword: string; // String!
   }
+  createEmployeeInput: { // input type
+    email: string; // String!
+    firstName: string; // String!
+    lastName: string; // String!
+  }
   createUserInputType: { // input type
     email: string; // String!
     firstName: string; // String!
@@ -65,6 +70,7 @@ export interface NexusGenObjects {
     name: string; // String!
   }
   Query: {};
+  Subscription: {};
   Task: { // root type
     description: string; // String!
     id: string; // String!
@@ -112,6 +118,7 @@ export interface NexusGenFieldTypes {
   }
   Mutation: { // field return type
     changePassword: boolean; // Boolean!
+    createEmployee: NexusGenRootTypes['Employee']; // Employee!
     createUser: NexusGenRootTypes['User']; // User!
     signInUser: NexusGenRootTypes['accessToken']; // accessToken!
     updateCompany: NexusGenRootTypes['Company']; // Company!
@@ -123,8 +130,12 @@ export interface NexusGenFieldTypes {
     tasks: Array<NexusGenRootTypes['Task'] | null>; // [Task]!
   }
   Query: { // field return type
+    employees: Array<NexusGenRootTypes['Employee'] | null>; // [Employee]!
     me: NexusGenRootTypes['User'] | null; // User
     myCompany: NexusGenRootTypes['Company']; // Company!
+  }
+  Subscription: { // field return type
+    employees: Array<NexusGenRootTypes['Employee'] | null>; // [Employee]!
   }
   Task: { // field return type
     description: string; // String!
@@ -163,6 +174,7 @@ export interface NexusGenFieldTypeNames {
   }
   Mutation: { // field return type name
     changePassword: 'Boolean'
+    createEmployee: 'Employee'
     createUser: 'User'
     signInUser: 'accessToken'
     updateCompany: 'Company'
@@ -174,8 +186,12 @@ export interface NexusGenFieldTypeNames {
     tasks: 'Task'
   }
   Query: { // field return type name
+    employees: 'Employee'
     me: 'User'
     myCompany: 'Company'
+  }
+  Subscription: { // field return type name
+    employees: 'Employee'
   }
   Task: { // field return type name
     description: 'String'
@@ -202,6 +218,9 @@ export interface NexusGenArgTypes {
   Mutation: {
     changePassword: { // args
       data: NexusGenInputs['changePasswordInput']; // changePasswordInput!
+    }
+    createEmployee: { // args
+      data: NexusGenInputs['createEmployeeInput']; // createEmployeeInput!
     }
     createUser: { // args
       data: NexusGenInputs['createUserInputType']; // createUserInputType!
