@@ -16,7 +16,7 @@ import {
 } from "../controllers/Employee";
 import { db } from "../context";
 import { currentLoggedInUser } from "../controllers";
-const pubsub = new PubSub();
+import { pubsub } from "./Subscriptions";
 
 export const Employee = objectType({
   name: "Employee",
@@ -119,37 +119,6 @@ export const EmployeeQuery = extendType({
       resolve: async (root, args, ctx) => {
         try {
           return await GetEmployee(ctx, args.data);
-        } catch (error) {
-          throw error;
-        }
-      },
-    });
-  },
-});
-
-export const EmployeeSubscription = subscriptionType({
-  definition(t) {
-    t.nonNull.list.field("employees", {
-      type: "Employee",
-      subscribe() {
-        return pubsub.asyncIterator(["USER_CREATED"]);
-      },
-      resolve: async (root, args, ctx) => {
-        try {
-          const user = ctx as unknown as User;
-          if (user) {
-            const company = await db.company.findUnique({
-              where: {
-                userId: user.id,
-              },
-            });
-            return await db.employee.findMany({
-              where: {
-                companyId: company!.id,
-              },
-            });
-          }
-          throw new Error("No User");
         } catch (error) {
           throw error;
         }

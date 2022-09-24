@@ -23,6 +23,9 @@ export interface NexusGenInputs {
     firstName: string; // String!
     lastName: string; // String!
   }
+  createProjectInput: { // input type
+    name: string; // String!
+  }
   createUserInputType: { // input type
     email: string; // String!
     firstName: string; // String!
@@ -122,6 +125,7 @@ export interface NexusGenFieldTypes {
   Mutation: { // field return type
     changePassword: boolean; // Boolean!
     createEmployee: NexusGenRootTypes['Employee']; // Employee!
+    createProject: NexusGenRootTypes['Project']; // Project!
     createUser: NexusGenRootTypes['User']; // User!
     deleteEmployee: NexusGenRootTypes['Employee']; // Employee!
     signInUser: NexusGenRootTypes['accessToken']; // accessToken!
@@ -138,9 +142,11 @@ export interface NexusGenFieldTypes {
     employees: Array<NexusGenRootTypes['Employee'] | null>; // [Employee]!
     me: NexusGenRootTypes['User'] | null; // User
     myCompany: NexusGenRootTypes['Company']; // Company!
+    projects: Array<NexusGenRootTypes['Project'] | null>; // [Project]!
   }
   Subscription: { // field return type
     employees: Array<NexusGenRootTypes['Employee'] | null>; // [Employee]!
+    projects: Array<NexusGenRootTypes['Project'] | null>; // [Project]!
   }
   Task: { // field return type
     description: string; // String!
@@ -180,6 +186,7 @@ export interface NexusGenFieldTypeNames {
   Mutation: { // field return type name
     changePassword: 'Boolean'
     createEmployee: 'Employee'
+    createProject: 'Project'
     createUser: 'User'
     deleteEmployee: 'Employee'
     signInUser: 'accessToken'
@@ -196,9 +203,11 @@ export interface NexusGenFieldTypeNames {
     employees: 'Employee'
     me: 'User'
     myCompany: 'Company'
+    projects: 'Project'
   }
   Subscription: { // field return type name
     employees: 'Employee'
+    projects: 'Project'
   }
   Task: { // field return type name
     description: 'String'
@@ -228,6 +237,9 @@ export interface NexusGenArgTypes {
     }
     createEmployee: { // args
       data: NexusGenInputs['createEmployeeInput']; // createEmployeeInput!
+    }
+    createProject: { // args
+      data: NexusGenInputs['createProjectInput']; // createProjectInput!
     }
     createUser: { // args
       data: NexusGenInputs['createUserInputType']; // createUserInputType!
