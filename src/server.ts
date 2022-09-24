@@ -18,7 +18,7 @@ const app = express();
 
 const httpServer = createServer(app);
 
-const getDynamicContext = async (ctx: Context, msg: Message) => {
+const getUserFromWsContext = async (ctx: Context, msg: Message) => {
   if (ctx.connectionParams && ctx.connectionParams.Authorization) {
     const accessToken = ctx.connectionParams.Authorization as string;
     const userObj = jwt.verify(accessToken, "SECRET") as User;
@@ -29,7 +29,6 @@ const getDynamicContext = async (ctx: Context, msg: Message) => {
     });
     return user;
   }
-  // Otherwise let our resolvers know we don't have a current user
   return null;
 };
 export const startServer = async () => {
@@ -42,7 +41,7 @@ export const startServer = async () => {
       {
         schema,
         context: (ctx, msg) => {
-          return getDynamicContext(ctx, msg);
+          return getUserFromWsContext(ctx, msg);
         },
       },
       wsServer

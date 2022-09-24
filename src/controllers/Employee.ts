@@ -25,3 +25,29 @@ export const CreateEmployee = async (
   }
   throw new Error("No User");
 };
+
+export const GetEmployee = async (
+  ctx: Context,
+  data: NexusGenInputs["getEmployeeInputType"]
+) => {
+  const employee = await ctx.db.employee.findUnique({
+    where: {
+      id: data.id,
+    },
+  });
+  if (employee) {
+    return employee;
+  }
+  throw new Error("Employee Not Found");
+};
+
+export const DeleteEmployee = async (
+  ctx: Context,
+  data: NexusGenInputs["getEmployeeInputType"]
+) => {
+  return await ctx.db.employee.delete({
+    where: {
+      id: data.id,
+    },
+  });
+};

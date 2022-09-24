@@ -4,11 +4,16 @@ import {
   inputObjectType,
   nonNull,
   objectType,
+  stringArg,
   subscriptionType,
 } from "nexus";
 import { PubSub } from "graphql-subscriptions";
 
-import { CreateEmployee } from "../controllers/Employee";
+import {
+  CreateEmployee,
+  DeleteEmployee,
+  GetEmployee,
+} from "../controllers/Employee";
 import { db } from "../context";
 import { currentLoggedInUser } from "../controllers";
 const pubsub = new PubSub();
@@ -50,6 +55,33 @@ export const EmployeeMutation = extendType({
         }
       },
     });
+    t.nonNull.field("deleteEmployee", {
+      type: "Employee",
+      args: {
+        data: nonNull("getEmployeeInputType"),
+      },
+      resolve: async (root, args, ctx) => {
+        try {
+          const user = await currentLoggedInUser(ctx);
+          if (user) {
+            console.log("ran");
+            const deleted = await DeleteEmployee(ctx, args.data);
+            pubsub.publish("USER_CREATED", {});
+            return deleted;
+          }
+          throw new Error("No user");
+        } catch (error) {
+          throw error;
+        }
+      },
+    });
+  },
+});
+
+export const GetEmployeeInputType = inputObjectType({
+  name: "getEmployeeInputType",
+  definition(t) {
+    t.nonNull.string("id");
   },
 });
 
@@ -74,6 +106,19 @@ export const EmployeeQuery = extendType({
             });
           }
           throw new Error("No User");
+        } catch (error) {
+          throw error;
+        }
+      },
+    });
+    t.nonNull.field("employee", {
+      type: "Employee",
+      args: {
+        data: nonNull("getEmployeeInputType"),
+      },
+      resolve: async (root, args, ctx) => {
+        try {
+          return await GetEmployee(ctx, args.data);
         } catch (error) {
           throw error;
         }

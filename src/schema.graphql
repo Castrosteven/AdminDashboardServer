@@ -21,6 +21,7 @@ type Mutation {
   changePassword(data: changePasswordInput!): Boolean!
   createEmployee(data: createEmployeeInput!): Employee!
   createUser(data: createUserInputType!): User!
+  deleteEmployee(data: getEmployeeInputType!): Employee!
   signInUser(data: loginUserInputType!): accessToken!
   updateCompany(data: updateCompanyInputType!): Company!
   updateUser(data: updateUserInputType!): User!
@@ -33,6 +34,7 @@ type Project {
 }
 
 type Query {
+  employee(data: getEmployeeInputType!): Employee!
   employees: [Employee]!
   me: User
   myCompany: Company!
@@ -81,6 +83,10 @@ input createUserInputType {
   firstName: String!
   lastName: String!
   password: String!
+}
+
+input getEmployeeInputType {
+  id: String!
 }
 
 input loginUserInputType {

@@ -29,6 +29,9 @@ export interface NexusGenInputs {
     lastName: string; // String!
     password: string; // String!
   }
+  getEmployeeInputType: { // input type
+    id: string; // String!
+  }
   loginUserInputType: { // input type
     email: string; // String!
     password: string; // String!
@@ -120,6 +123,7 @@ export interface NexusGenFieldTypes {
     changePassword: boolean; // Boolean!
     createEmployee: NexusGenRootTypes['Employee']; // Employee!
     createUser: NexusGenRootTypes['User']; // User!
+    deleteEmployee: NexusGenRootTypes['Employee']; // Employee!
     signInUser: NexusGenRootTypes['accessToken']; // accessToken!
     updateCompany: NexusGenRootTypes['Company']; // Company!
     updateUser: NexusGenRootTypes['User']; // User!
@@ -130,6 +134,7 @@ export interface NexusGenFieldTypes {
     tasks: Array<NexusGenRootTypes['Task'] | null>; // [Task]!
   }
   Query: { // field return type
+    employee: NexusGenRootTypes['Employee']; // Employee!
     employees: Array<NexusGenRootTypes['Employee'] | null>; // [Employee]!
     me: NexusGenRootTypes['User'] | null; // User
     myCompany: NexusGenRootTypes['Company']; // Company!
@@ -176,6 +181,7 @@ export interface NexusGenFieldTypeNames {
     changePassword: 'Boolean'
     createEmployee: 'Employee'
     createUser: 'User'
+    deleteEmployee: 'Employee'
     signInUser: 'accessToken'
     updateCompany: 'Company'
     updateUser: 'User'
@@ -186,6 +192,7 @@ export interface NexusGenFieldTypeNames {
     tasks: 'Task'
   }
   Query: { // field return type name
+    employee: 'Employee'
     employees: 'Employee'
     me: 'User'
     myCompany: 'Company'
@@ -225,6 +232,9 @@ export interface NexusGenArgTypes {
     createUser: { // args
       data: NexusGenInputs['createUserInputType']; // createUserInputType!
     }
+    deleteEmployee: { // args
+      data: NexusGenInputs['getEmployeeInputType']; // getEmployeeInputType!
+    }
     signInUser: { // args
       data: NexusGenInputs['loginUserInputType']; // loginUserInputType!
     }
@@ -233,6 +243,11 @@ export interface NexusGenArgTypes {
     }
     updateUser: { // args
       data: NexusGenInputs['updateUserInputType']; // updateUserInputType!
+    }
+  }
+  Query: {
+    employee: { // args
+      data: NexusGenInputs['getEmployeeInputType']; // getEmployeeInputType!
     }
   }
 }
