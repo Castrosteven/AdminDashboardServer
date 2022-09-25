@@ -20,4 +20,6 @@ __exportStar(require("./Team"), exports);
 __exportStar(require("./Project"), exports);
 __exportStar(require("./Task"), exports);
 __exportStar(require("./Employee"), exports);
+__exportStar(require("./Project"), exports);
+__exportStar(require("./Subscriptions"), exports);
 //# sourceMappingURL=index.js.map
