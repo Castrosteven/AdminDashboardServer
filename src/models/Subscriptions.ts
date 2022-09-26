@@ -58,5 +58,31 @@ export const ProjectSubscription = subscriptionType({
         }
       },
     });
+    t.nonNull.list.field("teams", {
+      type: "Team",
+      subscribe() {
+        return pubsub.asyncIterator(["TEAM_CREATED"]);
+      },
+      resolve: async (root, args, ctx) => {
+        try {
+          const user = ctx as unknown as User;
+          if (user) {
+            const company = await db.company.findUnique({
+              where: {
+                userId: user.id,
+              },
+            });
+            return await db.team.findMany({
+              where: {
+                companyId: company!.id,
+              },
+            });
+          }
+          throw new Error("No User");
+        } catch (error) {
+          throw error;
+        }
+      },
+    });
   },
 });

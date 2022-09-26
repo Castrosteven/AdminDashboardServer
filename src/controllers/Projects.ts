@@ -2,7 +2,7 @@ import { Context } from "../context";
 import { NexusGenInputs } from "../nexus-typegen";
 import { currentLoggedInUser } from "./User";
 
-export const createCompany = async (
+export const createProject = async (
   ctx: Context,
   data: NexusGenInputs["createProjectInput"]
 ) => {
@@ -14,12 +14,19 @@ export const createCompany = async (
       },
     });
     if (company) {
-      return await ctx.db.project.create({
+      const newProject = await ctx.db.project.create({
         data: {
           ...data,
           companyId: company.id,
+          tasks: {
+            create: {
+              name: "Hello World",
+              description: "Hello World",
+            },
+          },
         },
       });
+      return newProject;
     }
     throw new Error("No Company");
   }

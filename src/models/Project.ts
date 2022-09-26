@@ -1,9 +1,8 @@
 import { extendType, inputObjectType, nonNull, objectType } from "nexus";
 import { currentLoggedInUser } from "../controllers";
-import { PubSub } from "graphql-subscriptions";
-import { createCompany } from "../controllers/Projects";
-const pubsub = new PubSub();
-
+import { createProject } from "../controllers/Projects";
+import { pubsub } from "./Subscriptions";
+import { db } from "../context";
 export const Project = objectType({
   name: "Project",
   definition(t) {
@@ -13,7 +12,7 @@ export const Project = objectType({
       type: "Task",
       resolve: async (root, args, ctx) => {
         try {
-          return await ctx.db.task.findMany({
+          return await db.task.findMany({
             where: {
               projectId: root.id,
             },
@@ -72,7 +71,7 @@ export const ProjectMutation = extendType({
       },
       resolve: async (_root, args, ctx) => {
         try {
-          const newCompany = await createCompany(ctx, args.data);
+          const newCompany = await createProject(ctx, args.data);
           pubsub.publish("PROJECT_CREATED", {});
           return newCompany;
         } catch (error) {

@@ -21,8 +21,10 @@ type Mutation {
   changePassword(data: changePasswordInput!): Boolean!
   createEmployee(data: createEmployeeInput!): Employee!
   createProject(data: createProjectInput!): Project!
+  createTeam(data: createTeamInput!): Team!
   createUser(data: createUserInputType!): User!
   deleteEmployee(data: getEmployeeInputType!): Employee!
+  deleteTeam(data: getTeamInputType!): Team!
   signInUser(data: loginUserInputType!): accessToken!
   updateCompany(data: updateCompanyInputType!): Company!
   updateUser(data: updateUserInputType!): User!
@@ -40,11 +42,14 @@ type Query {
   me: User
   myCompany: Company!
   projects: [Project]!
+  team(data: getTeamInputType!): Team!
+  teams: [Team]!
 }
 
 type Subscription {
   employees: [Employee]!
   projects: [Project]!
+  teams: [Team]!
 }
 
 type Task {
@@ -85,6 +90,10 @@ input createProjectInput {
   name: String!
 }
 
+input createTeamInput {
+  name: String!
+}
+
 input createUserInputType {
   email: String!
   firstName: String!
@@ -93,6 +102,10 @@ input createUserInputType {
 }
 
 input getEmployeeInputType {
+  id: String!
+}
+
+input getTeamInputType {
   id: String!
 }
 

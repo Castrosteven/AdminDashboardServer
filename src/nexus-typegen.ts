@@ -26,6 +26,9 @@ export interface NexusGenInputs {
   createProjectInput: { // input type
     name: string; // String!
   }
+  createTeamInput: { // input type
+    name: string; // String!
+  }
   createUserInputType: { // input type
     email: string; // String!
     firstName: string; // String!
@@ -33,6 +36,9 @@ export interface NexusGenInputs {
     password: string; // String!
   }
   getEmployeeInputType: { // input type
+    id: string; // String!
+  }
+  getTeamInputType: { // input type
     id: string; // String!
   }
   loginUserInputType: { // input type
@@ -126,8 +132,10 @@ export interface NexusGenFieldTypes {
     changePassword: boolean; // Boolean!
     createEmployee: NexusGenRootTypes['Employee']; // Employee!
     createProject: NexusGenRootTypes['Project']; // Project!
+    createTeam: NexusGenRootTypes['Team']; // Team!
     createUser: NexusGenRootTypes['User']; // User!
     deleteEmployee: NexusGenRootTypes['Employee']; // Employee!
+    deleteTeam: NexusGenRootTypes['Team']; // Team!
     signInUser: NexusGenRootTypes['accessToken']; // accessToken!
     updateCompany: NexusGenRootTypes['Company']; // Company!
     updateUser: NexusGenRootTypes['User']; // User!
@@ -143,10 +151,13 @@ export interface NexusGenFieldTypes {
     me: NexusGenRootTypes['User'] | null; // User
     myCompany: NexusGenRootTypes['Company']; // Company!
     projects: Array<NexusGenRootTypes['Project'] | null>; // [Project]!
+    team: NexusGenRootTypes['Team']; // Team!
+    teams: Array<NexusGenRootTypes['Team'] | null>; // [Team]!
   }
   Subscription: { // field return type
     employees: Array<NexusGenRootTypes['Employee'] | null>; // [Employee]!
     projects: Array<NexusGenRootTypes['Project'] | null>; // [Project]!
+    teams: Array<NexusGenRootTypes['Team'] | null>; // [Team]!
   }
   Task: { // field return type
     description: string; // String!
@@ -187,8 +198,10 @@ export interface NexusGenFieldTypeNames {
     changePassword: 'Boolean'
     createEmployee: 'Employee'
     createProject: 'Project'
+    createTeam: 'Team'
     createUser: 'User'
     deleteEmployee: 'Employee'
+    deleteTeam: 'Team'
     signInUser: 'accessToken'
     updateCompany: 'Company'
     updateUser: 'User'
@@ -204,10 +217,13 @@ export interface NexusGenFieldTypeNames {
     me: 'User'
     myCompany: 'Company'
     projects: 'Project'
+    team: 'Team'
+    teams: 'Team'
   }
   Subscription: { // field return type name
     employees: 'Employee'
     projects: 'Project'
+    teams: 'Team'
   }
   Task: { // field return type name
     description: 'String'
@@ -241,11 +257,17 @@ export interface NexusGenArgTypes {
     createProject: { // args
       data: NexusGenInputs['createProjectInput']; // createProjectInput!
     }
+    createTeam: { // args
+      data: NexusGenInputs['createTeamInput']; // createTeamInput!
+    }
     createUser: { // args
       data: NexusGenInputs['createUserInputType']; // createUserInputType!
     }
     deleteEmployee: { // args
       data: NexusGenInputs['getEmployeeInputType']; // getEmployeeInputType!
+    }
+    deleteTeam: { // args
+      data: NexusGenInputs['getTeamInputType']; // getTeamInputType!
     }
     signInUser: { // args
       data: NexusGenInputs['loginUserInputType']; // loginUserInputType!
@@ -260,6 +282,9 @@ export interface NexusGenArgTypes {
   Query: {
     employee: { // args
       data: NexusGenInputs['getEmployeeInputType']; // getEmployeeInputType!
+    }
+    team: { // args
+      data: NexusGenInputs['getTeamInputType']; // getTeamInputType!
     }
   }
 }

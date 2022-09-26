@@ -1,20 +1,10 @@
-import { User } from "@prisma/client";
-import {
-  extendType,
-  inputObjectType,
-  nonNull,
-  objectType,
-  stringArg,
-  subscriptionType,
-} from "nexus";
-import { PubSub } from "graphql-subscriptions";
+import { extendType, inputObjectType, nonNull, objectType } from "nexus";
 
 import {
   CreateEmployee,
   DeleteEmployee,
   GetEmployee,
 } from "../controllers/Employee";
-import { db } from "../context";
 import { currentLoggedInUser } from "../controllers";
 import { pubsub } from "./Subscriptions";
 
@@ -64,7 +54,6 @@ export const EmployeeMutation = extendType({
         try {
           const user = await currentLoggedInUser(ctx);
           if (user) {
-            console.log("ran");
             const deleted = await DeleteEmployee(ctx, args.data);
             pubsub.publish("USER_CREATED", {});
             return deleted;
