@@ -7,7 +7,7 @@ generator client {
 
 datasource db {
   provider = "mongodb"
-  url      = env("DATABASE_URL")
+  url      = "mongodb+srv://steve:HbuFT0OrqBfP1Jvy@cluster0.ptaj6qy.mongodb.net/database"
 }
 
 model User {

@@ -16,7 +16,7 @@ const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const port = 5000;
 const app = (0, express_1.default)();
 const httpServer = (0, http_1.createServer)(app);
-const getDynamicContext = async (ctx, msg) => {
+const getUserFromWsContext = async (ctx, msg) => {
     if (ctx.connectionParams && ctx.connectionParams.Authorization) {
         const accessToken = ctx.connectionParams.Authorization;
         const userObj = jsonwebtoken_1.default.verify(accessToken, "SECRET");
@@ -27,7 +27,6 @@ const getDynamicContext = async (ctx, msg) => {
         });
         return user;
     }
-    // Otherwise let our resolvers know we don't have a current user
     return null;
 };
 const startServer = async () => {
@@ -39,7 +38,7 @@ const startServer = async () => {
         const serverCleanup = (0, ws_2.useServer)({
             schema: schema_1.schema,
             context: (ctx, msg) => {
-                return getDynamicContext(ctx, msg);
+                return getUserFromWsContext(ctx, msg);
             },
         }, wsServer);
         const server = new apollo_server_express_1.ApolloServer({
